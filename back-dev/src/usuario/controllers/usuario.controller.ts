@@ -1,41 +1,52 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { UsuarioService } from '../services/usuario.service';
 import { Usuario } from '../entities/usuario.entity';
+import { JwtAuthGuard } from '../../auth/guard/jwt-auth-guard';
 
 @Controller('/usuario')
 export class UsuarioController {
+
   constructor(private readonly usuarioService: UsuarioService) {}
 
-  @Post()
-  create(
+  @Post("/cadastrar")
+  @HttpCode(HttpStatus.CREATED)
+  async create(
     @Body() usuario: Usuario
-  ) {
-    return this.usuarioService.create(usuario);
+  ): Promise<Usuario> {
+    return await this.usuarioService.create(usuario);
   }
 
-  @Get()
-  findAll() {
-    return this.usuarioService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @Get("/all")
+  @HttpCode(HttpStatus.OK)
+  async findAll(): Promise<Usuario[]> {
+    return await this.usuarioService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:id')
-  findById(
+  @HttpCode(HttpStatus.OK)
+  async findById(
     @Param('id', ParseIntPipe) id: number
-  ) {
-    return this.usuarioService.findById(id);
+  ): Promise<Usuario> {
+    return await this.usuarioService.findById(id);
   }
 
-  @Put()
-  update(
+  @UseGuards(JwtAuthGuard)
+  @Put("/atualizar")
+  @HttpCode(HttpStatus.OK)
+  async update(
     @Body() usuario: Usuario
-  ) {
-    return this.usuarioService.update(usuario);
+  ): Promise<Usuario> {
+    return await this.usuarioService.update(usuario);
   }
 
-  @Delete('/:id')
-  remove(
+  @UseGuards(JwtAuthGuard)
+  @Delete('/deletar/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(
     @Param('id', ParseIntPipe) id: number
   ) {
-    return this.usuarioService.remove(id);
+    return await this.usuarioService.remove(id);
   }
 }
