@@ -1,12 +1,17 @@
 import { Grid, Typography, TextField, FormControlLabel, Checkbox, Button } from '@mui/material';
-import styles from './Login.module.scss';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../services/Service';
+import { useStyles } from './style';
+import { addToken } from '../../store/tokens/actions';
+import { useDispatch } from 'react-redux';
 
 export default function Login(){
 
-  const [token, setToken] = useState('')
+  const classes = useStyles();
+  const navigate = useNavigate();
+  const [token, setToken] = useState('');
+  const dispatch = useDispatch();
 
   const [usuario, setUsuario] = useState({
     id: 0,
@@ -17,8 +22,10 @@ export default function Login(){
   })
 
   useEffect(() => {
-    if(token != '')
-      alert('Token funcionou!')
+    if(token != ''){
+      dispatch(addToken(token));
+      navigate('/usuarios');
+    }
   }, [token])
   
   async function onSubmit(e: ChangeEvent<HTMLFormElement>){
@@ -26,10 +33,10 @@ export default function Login(){
 
     try{
       await login('/auth/logar', usuario, setToken)
-      alert('usuario logado')
+      alert('usuario logado');
     }
     catch(erro){
-      alert('erro ao logar!');
+      alert(`Erro ao logar!`);
     }
   }
 
@@ -41,7 +48,7 @@ export default function Login(){
   }
   
   return(
-    <Grid container justifyContent='center' xs={12} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
+    <Grid container justifyContent='center' xs={3} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
       <form onSubmit={onSubmit}>
         <Typography variant="h2" color="initial" mb={2}>
           Login
@@ -49,10 +56,29 @@ export default function Login(){
 
         <Grid container>
           <Grid item xs={8} m={'0 auto'}>
-            <TextField id="usuario" label="usuario" name='username' value={usuario.username} variant='outlined' onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)} fullWidth />
+            <TextField
+              id="usuario"
+              label="usuario"
+              name='username'
+              value={usuario.username}
+              variant='outlined'
+              required
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={8} m={'0 auto'} my={2}>
-            <TextField id="senha" label="senha" name='password' value={usuario.password} variant='outlined' type='password' onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)} fullWidth />
+            <TextField
+              id="senha"
+              label="senha"
+              name='password'
+              value={usuario.password}
+              variant='outlined'
+              type='password'
+              required
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}
+              fullWidth
+            />
           </Grid>
     
           <Grid item xs={12}>
@@ -75,10 +101,8 @@ export default function Login(){
             </Button>
           </Grid>
           <Grid item xs={8} mx={'auto'}>
-            <Link to='/cadastro'>
-              <Button variant="contained" color="warning" fullWidth>
-                Criar nova conta
-              </Button>
+            <Link to='/cadastro' className={classes.link}>
+              Criar nova conta
             </Link>
           </Grid>
         </Grid>

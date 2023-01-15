@@ -2,11 +2,12 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { cadastroUsuario } from "../../services/Service";
+import { useStyles } from "./style";
 
 export default function CadastroUsuario(){
 
+  const classes = useStyles();
   const navigate = useNavigate();
-  const [token, setToken] = useState('');
   const [usuario, setUsuario] = useState({
     id: 0,
     username: '',
@@ -39,7 +40,10 @@ export default function CadastroUsuario(){
         navigate('/')
       }
       catch(erro){
-        alert('erro ao cadastrar usuario!');
+        console.log(`Erro ${erro}!`);
+      }
+      finally{
+        alert('Erro ao cadastrar usuario!');
       }
     }
     else{
@@ -48,7 +52,7 @@ export default function CadastroUsuario(){
   }
   
   return(
-    <Grid container justifyContent='center' xs={12} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
+    <Grid container justifyContent='center' xs={3} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
       <form onSubmit={onSubmit}>
         <Typography variant="h2" color="initial" mb={2}>
           Cadastre-se
@@ -56,14 +60,43 @@ export default function CadastroUsuario(){
 
         <Grid container>
           <Grid item xs={8} m={'0 auto'}>
-            <TextField id="usuario" label="usuario" name='username' value={usuario.username} variant='outlined' onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)} fullWidth />
+            <TextField
+              id="usuario"
+              label="usuario"
+              name='username'
+              value={usuario.username}
+              variant='outlined'
+              required
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={8} m={'0 auto'} my={2}>
-            <TextField id="senha" label="senha" name='password' value={usuario.password} variant='outlined' type='password' onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)} fullWidth />
+            <TextField
+              id="senha"
+              label="senha"
+              name='password'
+              value={usuario.password}
+              variant='outlined'
+              type='password'
+              required
+              onChange={(e: ChangeEvent<HTMLInputElement>) => updateModel(e)}
+              fullWidth
+            />
           </Grid>
 
           <Grid item xs={8} m={'0 auto'}>
-            <TextField id="confirmarsenha" label="confirmar senha" name='confirmarsenha' value={senha} variant='outlined' type='password' onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenha(e)} fullWidth />
+            <TextField
+              id="confirmarsenha"
+              label="confirmarsenha"
+              name='confirmarsenha'
+              value={senha}
+              variant='outlined'
+              type='password'
+              required
+              onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenha(e)}
+              fullWidth
+            />
           </Grid>
 
           <Grid item xs={8} mx={'auto'} my={2}>
@@ -73,7 +106,7 @@ export default function CadastroUsuario(){
           </Grid>
 
           <Grid item xs={8} mx={'auto'}>
-            <Link to='/'>
+            <Link to='/' className={classes.link}>
               <Button variant="contained" color="success" fullWidth>
                 Fazer Login
               </Button>
