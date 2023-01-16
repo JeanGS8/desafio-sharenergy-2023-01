@@ -31,13 +31,14 @@ export default function Login(){
   async function onSubmit(e: ChangeEvent<HTMLFormElement>){
     e.preventDefault();
 
-    try{
-      await login('/auth/logar', usuario, setToken)
+    
+    await login('/auth/logar', usuario, setToken)
+    .then(() => {
       alert('usuario logado');
-    }
-    catch(erro){
+    })
+    .catch(() => {
       alert(`Erro ao logar!`);
-    }
+    })
   }
 
   function updateModel(e: ChangeEvent<HTMLInputElement>){
@@ -48,7 +49,7 @@ export default function Login(){
   }
   
   return(
-    <Grid container justifyContent='center' xs={3} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
+    <Grid container justifyContent='center' xs={10} sm={8} md={6} lg={4} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
       <form onSubmit={onSubmit}>
         <Typography variant="h2" color="initial" mb={2}>
           Login

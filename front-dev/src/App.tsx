@@ -9,9 +9,9 @@ import Navbar from './componentes/estaticos/Navbar';
 function App() {
   return (
     <Provider store={store}>
-      <Navbar />
       <Router>
-        <div style={{minHeight: '10px', paddingTop: '64px'}}>
+        <Navbar />
+        <div style={{minHeight: 'calc(100vh - 64px)', paddingTop: '64px'}}>
           <Routes>
             <Route path='/' element={ <Login /> } />
             <Route path='/cadastro' element={ <CadastroUsuario /> } />

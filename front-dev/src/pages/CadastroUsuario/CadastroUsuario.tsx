@@ -33,26 +33,29 @@ export default function CadastroUsuario(){
   async function onSubmit(e: ChangeEvent<HTMLFormElement>){
     e.preventDefault();
 
-    if(senha == usuario.password){
-      try{
-        await cadastroUsuario('/usuario/cadastrar', usuario, setUsuario)
-        alert('usuario cadastrado')
-        navigate('/')
-      }
-      catch(erro){
-        console.log(`Erro ${erro}!`);
-      }
-      finally{
-        alert('Erro ao cadastrar usuario!');
-      }
+    if(senha.length < 8){
+      alert('Erro ao cadastrar usuario!');
+    }
+    else if(usuario.username.length < 4){
+      alert('o username deve conter no minimo 8 digitos!');
+    }
+    else if(senha == usuario.password){
+      await cadastroUsuario('/usuario/cadastrar', usuario, setUsuario)
+      .then(() => {
+        alert('usuario cadastrado');
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(`Erro ${err}!`);
+      })
     }
     else{
-      alert('senha está diferente!');
+      alert('as senhas estão diferentes!');
     }
   }
   
   return(
-    <Grid container justifyContent='center' xs={3} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
+    <Grid container justifyContent='center' xs={10} sm={8} md={6} lg={4} m={'0 auto'} textAlign={'center'} bgcolor={'lightskyblue'} borderRadius={2} mt={15} p={5}>
       <form onSubmit={onSubmit}>
         <Typography variant="h2" color="initial" mb={2}>
           Cadastre-se
