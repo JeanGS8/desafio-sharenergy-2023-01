@@ -8,17 +8,10 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
-    width: '16%',
+    width: '45%',
     maxWidth: 345,
-    margin: '1% 2.5%',
-
-    '&:nth-child(5n)':{
-      marginRight: 0,
-    },
-    
-    '&:nth-child(5n+1)':{
-      marginLeft: 0,
-    },
+    margin: '1% auto',
+    textAlign: 'justify'
   }
 })
 

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import CadastroUsuario from './pages/CadastroUsuario/CadastroUsuario';
-import ListagemUsuarios from './pages/Usuarios/ListagemUsuarios';
+import ListagemUsuarios from './pages/ListagemUsuarios/ListagemUsuarios';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Navbar from './componentes/estaticos/Navbar';

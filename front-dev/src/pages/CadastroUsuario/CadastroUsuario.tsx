@@ -45,7 +45,7 @@ export default function CadastroUsuario(){
         alert('usuario cadastrado');
         navigate('/');
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(`Erro ${err}!`);
       })
     }

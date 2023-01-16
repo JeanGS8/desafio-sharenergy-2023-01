@@ -8,7 +8,7 @@ export const api = axios.create({
 export const login = async (url: string, dados: {username: string, password: string}, setDado: React.Dispatch<string>) => {
 
   await api.post(url, dados)
-  .then((response) => {
+  .then(response => {
     setDado(response.data.token);
   })
 }
@@ -16,7 +16,7 @@ export const login = async (url: string, dados: {username: string, password: str
 export const cadastroUsuario = async (url: string, dados: {username: string, password: string}, setDado:React.Dispatch<React.SetStateAction<UsuarioLogin>>) => {
 
   await api.post(url, dados)
-  .then((response) => {
+  .then(response => {
     setDado(response.data);
   })
 }
@@ -24,16 +24,17 @@ export const cadastroUsuario = async (url: string, dados: {username: string, pas
 export const randomUser = async(setDado:React.Dispatch<React.SetStateAction<{ foto: string; nome: string; email: string; username: string; idade: number; }>>) => {
 
   await axios.get('https://randomuser.me/api/')
-  .then((response) => {
+  .then(response => {
+    const res = response.data.results[0];
     setDado({
-      foto: response.data.results[0].picture.large,
-      nome: response.data.results[0].name.first,
-      email: response.data.results[0].email,
-      username: response.data.results[0].login.username,
-      idade: response.data.results[0].dob.age
+      foto: res.picture.large,
+      nome: res.name.first,
+      email: res.email,
+      username: res.login.username,
+      idade: res.dob.age
     })
   })
-  .catch((response) => {
-    console.log('ERRO: ' + response);
+  .catch(err => {
+    console.log(`ERRO: ${err}`);
   })
 }
