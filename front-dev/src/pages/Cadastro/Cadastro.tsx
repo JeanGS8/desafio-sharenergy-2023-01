@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { cadastroUsuario } from "../../services/Service";
 import { useStyles } from "./style";
 
-export default function CadastroUsuario(){
+export default function Cadastro(){
 
   const classes = useStyles();
   const navigate = useNavigate();

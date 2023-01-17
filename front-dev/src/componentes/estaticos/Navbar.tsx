@@ -95,6 +95,13 @@ export default function Navbar(){
                 </ListItem>
               </Link>
 
+              <Link to='/gatos' className={classes.link}>
+                <ListItem className={classes.item}>
+                  <LogoutIcon className={classes.icon}/>
+                  Gatos
+                </ListItem>
+              </Link>
+              
               <Link to='/' className={classes.link} onClick={logout}>
                 <ListItem className={classes.item}>
                   <LogoutIcon className={classes.icon}/>
