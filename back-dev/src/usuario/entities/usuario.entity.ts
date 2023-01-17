@@ -17,9 +17,4 @@ export class Usuario {
   @IsString()
   @Column({length: 100, nullable: false})
   password: string;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  @Column({nullable: false})
-  remember: boolean;
 }
